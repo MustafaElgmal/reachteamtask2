@@ -3,24 +3,47 @@ import { Item } from "../../types/item.interface";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface DataState {
   data: Item[];
+  ItemsShow: Item[];
+  totalPage: number;
+  currentPage: number;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: DataState = {
   data: [],
+  ItemsShow: [],
+  totalPage: 0,
+  currentPage: 0,
   loading: false,
   error: null,
 };
 
-export const fetchDataAsync = createAsyncThunk("item/fetchItems", async () => {
-  const { data } = await fetchItems();
-  return data;
-});
 export const itemSlice = createSlice({
   name: "item",
   initialState,
   reducers: {
+    addItems(state, action: PayloadAction<Item[]>) {
+      state.data = action.payload;
+      state.loading = false;
+      state.error = null; // Reset error on successful fetch
+    },
+    addItemsShow(
+      state,
+      action: PayloadAction<{ page: number; limit: number }>
+    ) {
+      const skip = (action.payload.page - 1) * action.payload.limit;
+      state.ItemsShow = [
+        ...state.ItemsShow,
+        ...state.data.slice(skip, skip + action.payload.limit),
+      ];
+      state.currentPage = action.payload.page;
+      state.totalPage = Math.ceil(state.data.length / action.payload.limit);
+    },
+    setItemsError(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload; // Set error message
+    },
     addItem(state, action) {
       // Add a new item to the array
       state.data.push(action.payload);
@@ -37,21 +60,13 @@ export const itemSlice = createSlice({
       }
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchDataAsync.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchDataAsync.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.loading = false;
-      })
-      .addCase(fetchDataAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Failed to fetch data";
-      });
-  },
 });
-export const { addItem, removeItem, updateItem } = itemSlice.actions;
+export const {
+  addItem,
+  removeItem,
+  updateItem,
+  addItems,
+  addItemsShow,
+  setItemsError,
+} = itemSlice.actions;
 export default itemSlice.reducer;

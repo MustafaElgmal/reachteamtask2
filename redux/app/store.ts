@@ -1,7 +1,7 @@
 // src/redux/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import categoryReducer from "../features/category"; // Adjust the path as necessary
-import itemReducer from "../features/category";
+import itemReducer from "../features/item";
 
 const store = configureStore({
   reducer: {

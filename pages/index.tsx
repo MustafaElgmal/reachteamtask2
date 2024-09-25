@@ -51,7 +51,7 @@ export default function Home({
               cy="12"
               r="10"
               stroke="currentColor"
-              stroke-width="4"
+              strokeWidth="4"
             ></circle>
             <path
               className="opacity-75"
@@ -73,12 +73,12 @@ export default function Home({
 
 export const getServerSideProps = async () => {
   try {
-    // const { data } = await fetchCategories(); // Fetch categories from your API
-    const data = [
-      { name: "Sony", id: 7 },
-      { name: "Samsung", id: 9 },
-      { name: "Apple", id: 48 },
-    ];
+    const { data } = await fetchCategories(); // Fetch categories from your API
+    // const data = [
+    //   { name: "Sony", id: 7 },
+    //   { name: "Samsung", id: 9 },
+    //   { name: "Apple", id: 48 },
+    // ];
 
     return {
       props: { initialCategories: data }, // No initial state passed
