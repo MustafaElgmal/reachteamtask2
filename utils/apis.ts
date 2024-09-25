@@ -5,13 +5,14 @@ export const fetchCategories = async () => {
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/brands`,
       {
         headers: {
-          "x-rapidapi-key": `${process.env.RAPIDAPI_KEY}`,
+          "x-rapidapi-key": `${process.env.NEXT_PUBLIC_RAPIDAPI_KEY}`,
           "Content-Type": "application/json",
         },
       }
     );
     return response;
   } catch (e) {
+    console.log(e)
     throw new Error("Network response was not ok");
   }
 };

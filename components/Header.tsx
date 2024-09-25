@@ -1,18 +1,15 @@
-
 import { useState } from "react";
 import Link from "next/link";
 import { classNames } from "../constants";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useAppSelector } from "@/redux/app/hookes";
 
-const navigation = [
-  { name: "Product", id: 1 },
-  { name: "Features", id: 2 },
-  { name: "Marketplace", id: 3 },
-  { name: "Company", id: 4 },
-];
 
 export default function Header() {
+  const { data, loading, categoriesShow } = useAppSelector(
+    (state) => state.category
+  );
   const [current, setCurrent] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
@@ -42,7 +39,7 @@ export default function Header() {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((category) => (
+          {categoriesShow.map((category) => (
             <Link
               key={category.id}
               href={`/category/${category.id}`}
@@ -93,7 +90,7 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {navigation.map((category) => (
+                {categoriesShow.map((category) => (
                   <Link
                     key={category.id}
                     href={`/category/${category.id}`}
