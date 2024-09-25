@@ -33,10 +33,14 @@ export const itemSlice = createSlice({
       action: PayloadAction<{ page: number; limit: number }>
     ) {
       const skip = (action.payload.page - 1) * action.payload.limit;
-      state.ItemsShow = [
-        ...state.ItemsShow,
-        ...state.data.slice(skip, skip + action.payload.limit),
-      ];
+      if (action.payload.page > state.currentPage)
+        state.ItemsShow = [
+          ...state.ItemsShow,
+          ...state.data.slice(skip, skip + action.payload.limit),
+        ];
+      else {
+        state.ItemsShow = state.data.slice(skip, skip + action.payload.limit);
+      }
       state.currentPage = action.payload.page;
       state.totalPage = Math.ceil(state.data.length / action.payload.limit);
     },

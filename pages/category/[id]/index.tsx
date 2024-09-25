@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
-import { fetchItems } from "../../../utils/apis";
+import { fetchCategories, fetchItems } from "../../../utils/apis";
 import { Item } from "../../../types/item.interface";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../redux/app/hookes";
@@ -10,12 +10,19 @@ import {
   addItemsShow,
   setItemsError,
 } from "../../../redux/features/item";
+import { Category } from "../../../types/category.interface";
+import {
+  addCategories,
+  addCategoriesShow,
+} from "../../../redux/features/category";
 
 export default function CategoryDetail({
   initialItems,
+  initialCategories,
   error,
 }: {
   initialItems: Item[];
+  initialCategories: Category[];
   error: string;
 }) {
   const [filters, setFilters] = useState<{
@@ -30,6 +37,7 @@ export default function CategoryDetail({
   const { loading, ItemsShow, totalPage, currentPage } = useAppSelector(
     (state) => state.item
   );
+  const [loadingScrol, setLoading] = useState(false);
   const dispatch = useDispatch();
   const handleFilterChange = (newFilters: {
     priceRange: number[];
@@ -39,10 +47,38 @@ export default function CategoryDetail({
     // Implement your filtering logic here, e.g., fetching filtered data
   };
   useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } =
+        document.documentElement;
+
+      if (scrollHeight - scrollTop === clientHeight && !loading) {
+        setLoading(true);
+        setTimeout(() => {
+          setPage(page + 1);
+          dispatch(addItemsShow({page, limit}));
+          setLoading(false);
+        }, 1000); // Simulated loading time (1 second)
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [page, loadingScrol]);
+
+  useEffect(() => {
     if (error) {
       dispatch(setItemsError(error));
     } else {
       dispatch(addItems(initialItems));
+      dispatch(addCategories(initialCategories));
+      dispatch(
+        addCategoriesShow(
+          initialCategories.filter((cat) => [48, 7, 9].includes(cat.id))
+        )
+      );
       dispatch(addItemsShow({ page, limit }));
     }
   }, [dispatch, initialItems, error]);
@@ -89,9 +125,7 @@ export default function CategoryDetail({
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900">
                   Trending products
                 </h2>
-                <a
-                  className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block"
-                >
+                <a className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
                   Shop the collection
                   <span aria-hidden="true"> &rarr;</span>
                 </a>
@@ -133,17 +167,21 @@ export default function CategoryDetail({
           {/* Render your filtered items here */}
         </main>
       </div>
+      <div id="spinner" style={{ display: loadingScrol ? "block" : "none" }}>
+        Loading...
+      </div>
     </div>
   );
 }
 
 export async function getServerSideProps(context: any) {
   const { id } = context.params;
-  console.log(id)
+  console.log(id);
   try {
     const { data } = await fetchItems(id);
+    const response = await fetchCategories();
     return {
-      props: { initialItems: data }, // No initial state passed
+      props: { initialItems: data, initialCategories: response.data }, // No initial state passed
     };
   } catch (error) {
     console.error("Error fetching Items:", error); // Log the error for debugging
