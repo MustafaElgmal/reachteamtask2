@@ -11,3 +11,4 @@ export interface Match {
     image_url: string;
     brand_id: number;
   }
+
