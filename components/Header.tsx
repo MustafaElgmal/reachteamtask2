@@ -40,7 +40,7 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           {categoriesShow.map((category) => (
-            <Link
+            <a
               key={category.id}
               href={`/category/${category.id}`}
               onClick={() => setCurrent(category.id)}
@@ -50,7 +50,7 @@ export default function Header() {
               )}
             >
               {category.name}
-            </Link>
+            </a>
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -91,7 +91,7 @@ export default function Header() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 {categoriesShow.map((category) => (
-                  <Link
+                  <a
                     key={category.id}
                     href={`/category/${category.id}`}
                     onClick={() => setCurrent(category.id)}
@@ -101,7 +101,7 @@ export default function Header() {
                     )}
                   >
                     {category.name}
-                  </Link>
+                  </a>
                 ))}
               </div>
               <div className="py-6">

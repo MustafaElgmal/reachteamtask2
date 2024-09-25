@@ -18,18 +18,18 @@ export const fetchCategories = async () => {
 };
 
 
-export const fetchItems=async()=>{
+export const fetchItems=async(categoryId:number)=>{
   try{
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/search`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/${categoryId}/phones`,
       {
         headers: {
-          "x-rapidapi-key": `${process.env.RAPIDAPI_KEY}`,
+          "x-rapidapi-key": `${process.env.NEXT_PUBLIC_RAPIDAPI_KEY}`,
           "Content-Type": "application/json",
         },
       }
     );
-    return response;
+    return response.data;
 
   }catch(e){
     throw new Error("Network response was not ok");

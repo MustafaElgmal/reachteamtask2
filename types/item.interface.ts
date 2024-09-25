@@ -1,14 +1,10 @@
-export interface Match {
-    [key: string]: string[];
-  }
+
   export interface Item {
-    id: string;
-    score: number;
-    terms: string[];
-    match: Match;
-    brand_name: string;
-    phone_name: string;
-    image_url: string;
-    brand_id: number;
+    brand_id: number,
+	brand_name:string,
+	id:string,
+	phone_name:string,
+	image_url:string,
+	description: string
   }
 
