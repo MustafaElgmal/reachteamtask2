@@ -1,7 +1,10 @@
-
+import { useAppSelector } from "@/redux/app/hookes";
 import Link from "next/link";
 
 export default function Main() {
+  const { data, loading, categoriesShow } = useAppSelector(
+    (state) => state.category
+  );
   return (
     <div className="bg-gray-50">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
@@ -17,80 +20,30 @@ export default function Main() {
             <span aria-hidden="true"> &rarr;</span>
           </Link>
         </div>
+        <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+          {categoriesShow.map((category) => (
+            <Link href={`/category/${category.id}`} key={category.id}>
+              <div className="relative">
+                <div className="relative h-72 w-full overflow-hidden rounded-lg">
+                  <img
+                    alt={`${category.name}`}
+                    src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-02.jpg"
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
-          <div className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
-            <img
-              alt="Two models wearing women's black cotton crewneck tee and off-white cotton crewneck tee."
-              src="https://tailwindui.com/img/ecommerce-images/home-page-03-featured-category.jpg"
-              className="object-cover object-center group-hover:opacity-75"
-            />
-            <div
-              aria-hidden="true"
-              className="bg-gradient-to-b from-transparent to-black opacity-50"
-            />
-            <div className="flex items-end p-6">
-              <div>
-                <h3 className="font-semibold text-white">
-                  <a href="/">
-                    <span className="absolute" />
-                    New Arrivals
-                  </a>
-                </h3>
-                <p aria-hidden="true" className="mt-1 text-sm text-white">
-                  Shop now
-                </p>
+                <div className="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
+                  />
+                  <p className="relative text-lg font-semibold text-white">
+                    {category.name}
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-none sm:relative sm:h-full">
-            <img
-              alt="Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters."
-              src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-01.jpg"
-              className="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full"
-            />
-            <div
-              aria-hidden="true"
-              className="bg-gradient-to-b from-transparent to-black opacity-50 sm:absolute sm:inset-0"
-            />
-            <div className="flex items-end p-6 sm:absolute sm:inset-0">
-              <div>
-                <h3 className="font-semibold text-white">
-                  <a href="#">
-                    <span className="absolute inset-0" />
-                    Accessories
-                  </a>
-                </h3>
-                <p aria-hidden="true" className="mt-1 text-sm text-white">
-                  Shop now
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-none sm:relative sm:h-full">
-            <img
-              alt="Walnut desk organizer set with white modular trays, next to porcelain mug on wooden desk."
-              src="https://tailwindui.com/img/ecommerce-images/home-page-03-category-02.jpg"
-              className="object-cover object-center group-hover:opacity-75 sm:absolute sm:inset-0 sm:h-full sm:w-full"
-            />
-            <div
-              aria-hidden="true"
-              className="bg-gradient-to-b from-transparent to-black opacity-50 sm:absolute sm:inset-0"
-            />
-            <div className="flex items-end p-6 sm:absolute sm:inset-0">
-              <div>
-                <h3 className="font-semibold text-white">
-                  <a href="#">
-                    <span className="absolute inset-0" />
-                    Workspace
-                  </a>
-                </h3>
-                <p aria-hidden="true" className="mt-1 text-sm text-white">
-                  Shop now
-                </p>
-              </div>
-            </div>
-          </div>
+            </Link>
+          ))}
         </div>
 
         <div className="mt-6 sm:hidden">

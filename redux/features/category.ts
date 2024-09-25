@@ -1,32 +1,39 @@
-import { fetchCategories } from "@/app/apis/fetchData";
+import { fetchCategories } from "../../utils/apis";
 import { Category } from "@/types/category.interface";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface DataState {
   data: Category[];
+  categoriesShow:Category[]
   loading: boolean;
   error: string | null;
 }
 
 const initialState: DataState = {
   data: [],
-  loading: false,
+  categoriesShow:[],
+  loading: true,
   error: null,
 };
 
-export const fetchDataAsync = createAsyncThunk(
-  "category/fetchCategories",
-  async () => {
-    const { data } = await fetchCategories();
-    return data;
-  }
-);
 export const categorySlice = createSlice({
   name: "category",
   initialState,
   reducers: {
+    addCategories(state, action: PayloadAction<Category[]>) {
+      state.data = action.payload;
+      state.loading = false;
+      state.error = null; // Reset error on successful fetch
+    },
+    setCategoriesError(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload; // Set error message
+    },
     addCategory(state, action) {
       // Add a new category to the array
       state.data.push(action.payload);
+    },
+    addCategoriesShow(state, action: PayloadAction<Category[]>) {
+      state.categoriesShow = action.payload;
     },
     removeCategory(state, action) {
       // Remove a category by its ID
@@ -40,22 +47,7 @@ export const categorySlice = createSlice({
       }
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchDataAsync.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchDataAsync.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.loading = false;
-      })
-      .addCase(fetchDataAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Failed to fetch data";
-      });
-  },
 });
-export const { addCategory, removeCategory, updateCategory } =
+export const { addCategory, removeCategory, updateCategory,addCategories,setCategoriesError,addCategoriesShow } =
   categorySlice.actions;
 export default categorySlice.reducer;
