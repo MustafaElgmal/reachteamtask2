@@ -1,5 +1,5 @@
-import { fetchItems } from "@/app/apis/fetchData";
-import { Item } from "@/types/item.interface";
+import { fetchItems } from "../../utils/apis";
+import { Item } from "../../types/item.interface";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface DataState {
   data: Item[];
