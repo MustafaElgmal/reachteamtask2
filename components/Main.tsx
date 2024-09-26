@@ -2,7 +2,7 @@ import { useAppSelector } from "@/redux/app/hookes";
 import Link from "next/link";
 
 export default function Main() {
-  const { data, loading, categoriesShow } = useAppSelector(
+  const {categoriesShow } = useAppSelector(
     (state) => state.category
   );
   return (
@@ -47,13 +47,13 @@ export default function Main() {
         </div>
 
         <div className="mt-6 sm:hidden">
-          <a
+          <Link
             href="/"
             className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
           >
             Browse all categories
             <span aria-hidden="true"> &rarr;</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

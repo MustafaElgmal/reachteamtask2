@@ -7,7 +7,7 @@ import { useAppSelector } from "@/redux/app/hookes";
 
 
 export default function Header() {
-  const { data, loading, categoriesShow } = useAppSelector(
+  const {categoriesShow } = useAppSelector(
     (state) => state.category
   );
   const [current, setCurrent] = useState(0);

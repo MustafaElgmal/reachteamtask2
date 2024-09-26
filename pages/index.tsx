@@ -1,13 +1,12 @@
 import Header from "../components/Header";
 import Main from "../components/Main";
-import { useAppDispatch, useAppSelector } from "../redux/app/hookes";
+import { useAppSelector } from "../redux/app/hookes";
 import {
   addCategories,
   addCategoriesShow,
   setCategoriesError,
 } from "../redux/features/category";
 import { fetchCategories } from "@/utils/apis";
-import store from "../redux/app/store";
 import { Category } from "@/types/category.interface";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -19,7 +18,7 @@ export default function Home({
   initialCategories: Category[];
   error: string;
 }) {
-  const { data, loading } = useAppSelector((state) => state.category);
+  const {loading } = useAppSelector((state) => state.category);
   const dispatch = useDispatch();
   useEffect(() => {
     if (error) {
