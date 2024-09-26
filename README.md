@@ -1,3 +1,54 @@
+# Mobile Phone Store
+
+## Description
+The "Mobile Phone Store" project is a web application that enables users to explore and purchase mobile phones from various categories such as Apple, Sony, and Samsung. Each category boasts a diverse selection of mobile phones. Users can seamlessly navigate through categories, access detailed product information, and utilize filtering options (like price and score, currently under development). The frontend leverages Tailwind CSS for styling and incorporates reusable components for a streamlined development process. Redux Toolkit manages the state of products and categories, while Axios facilitates data retrieval from APIs, including the RapidAPI service.
+
+## Table of Contents
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Features
+- Effortlessly browse and purchase mobile phones from Apple, Sony, and Samsung categories.
+- Click on category names in the navigation bar to swiftly navigate to the corresponding phone selections.
+- View in-depth product details on individual product pages.
+- Access a paginated list of mobiles by category ID using infinite scroll functionality.
+- Upcoming: Filter products by price and score (pending backend support).
+- Utilize Redux Toolkit for efficient state management.
+- Employ Axios for seamless data fetching from APIs, including the RapidAPI service.
+- Utilize Tailwind CSS for responsive styling and incorporate reusable components for consistent design.
+
+## Technologies Used
+- Frontend: HTML, CSS, JavaScript, React
+- Styling: Tailwind CSS
+- Components: Reusable components for enhanced development efficiency
+- State Management: Redux Toolkit
+- HTTP Requests: Axios
+- API Integration: RapidAPI
+- Pagination: Infinite Scroll (upcoming)
+- Backend: (Future implementation to support price and score filtering)
+
+## Installation
+1. Clone the repository.
+2. Install project dependencies using `npm install`.
+3. Create a `.env.local` file in the root directory based on the `.env.example` template.
+4. Populate the `.env.local` file with your environment-specific configuration, including the RapidAPI key as `NEXT_PUBLIC_RAPIDAPI_KEY`and baseUrl as `NEXT_PUBLIC_API_BASE_URL`.
+
+## Usage
+1. Navigate to your desired category in the navigation bar.
+2. Scroll through the selection and access individual product pages.
+3. Explore the diverse range of categories and products available in the store.
+4. Utilize Axios to fetch items by category ID from api `${process.env.NEXT_PUBLIC_API_BASE_URL}/${categoryId}/phones` and all categories from api `${process.env.NEXT_PUBLIC_API_BASE_URL}/brands` from RapidAPI.
+
+## Contributing
+Interested in contributing to this project? Refer to the README for guidelines on how to get involved.
+
+## License
+This project is licensed under the [Your License] License.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
