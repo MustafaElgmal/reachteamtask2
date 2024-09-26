@@ -16,6 +16,12 @@ import {
   addCategoriesShow,
 } from "../../../redux/features/category";
 
+interface Context {
+  params: {
+    id: number;
+  };
+}
+
 export default function CategoryDetail({
   initialItems,
   initialCategories,
@@ -33,8 +39,8 @@ export default function CategoryDetail({
     rating: 0,
   });
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(25);
-  const { loading, ItemsShow, totalPage, currentPage } = useAppSelector(
+  const [limit] = useState(25);
+  const { loading, ItemsShow } = useAppSelector(
     (state) => state.item
   );
   const [loadingScrol, setLoading] = useState(false);
@@ -44,6 +50,7 @@ export default function CategoryDetail({
     rating: number;
   }) => {
     setFilters(newFilters);
+    console.log(filters)
     // Implement your filtering logic here, e.g., fetching filtered data
   };
   useEffect(() => {
@@ -174,7 +181,7 @@ export default function CategoryDetail({
   );
 }
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context: Context) {
   const { id } = context.params;
   console.log(id);
   try {
