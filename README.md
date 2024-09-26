@@ -46,8 +46,8 @@ The "Mobile Phone Store" project is a web application that enables users to expl
 ## Contributing
 Interested in contributing to this project? Refer to the README for guidelines on how to get involved.
 
-## License
-This project is licensed under the [Your License] License.
+## Contact
+For questions or feedback, contact [MustafaElgmal] at [mostafaar@xed.aucegypt.edu].
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
